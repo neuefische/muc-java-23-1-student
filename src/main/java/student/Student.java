@@ -9,6 +9,15 @@ public class Student {
     int age;
     boolean isActiveStudent;
 
+    public Student() {}
+
+    public Student(String id, String name, int age, boolean isActiveStudent) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.isActiveStudent = isActiveStudent;
+    }
+
     public String printStudentName() {
         return "Name: " + name;
     }
