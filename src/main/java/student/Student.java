@@ -6,12 +6,16 @@ import java.util.Objects;
 // UpperCamelCase
 public class Student {
 
-    String id;
-    String name;
-    int age;
-    boolean isActiveStudent;
+    private String id;
+    private String name;
+    private int age;
+    private boolean isActiveStudent;
 
     public Student() {}
+
+    public Student(String name) {
+        this.name = name;
+    }
 
     public Student(String id, String name, int age, boolean isActiveStudent) {
         this.id = id;
@@ -62,25 +66,17 @@ public class Student {
                 '}';
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Student student = (Student) o;
-
-        if (age != student.age) return false;
-        if (isActiveStudent != student.isActiveStudent) return false;
-        if (!Objects.equals(id, student.id)) return false;
-        return Objects.equals(name, student.name);
+        return age == student.age && isActiveStudent == student.isActiveStudent && Objects.equals(id, student.id) && Objects.equals(name, student.name);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + age;
-        result = 31 * result + (isActiveStudent ? 1 : 0);
-        return result;
+        return Objects.hash(id, name, age, isActiveStudent);
     }
 }

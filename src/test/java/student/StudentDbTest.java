@@ -62,6 +62,7 @@ class StudentDbTest {
         // GIVEN
         Student jackTorrance = new Student("1", "Jack Torrance", 37, false);
         Student wendyTorrance = new Student("2", "Wendy Torrance", 35, false);
+
         Student [] expectedStudents = {jackTorrance, wendyTorrance};
 
         StudentDb studentDb = new StudentDb(expectedStudents);
