@@ -1,5 +1,7 @@
 package student;
 
+import java.util.Objects;
+
 // Klassennamen = Anfangs GroßGeschrieben
 // UpperCamelCase
 public class Student {
@@ -58,5 +60,27 @@ public class Student {
                 ", age=" + age +
                 ", isActiveStudent=" + isActiveStudent +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Student student = (Student) o;
+
+        if (age != student.age) return false;
+        if (isActiveStudent != student.isActiveStudent) return false;
+        if (!Objects.equals(id, student.id)) return false;
+        return Objects.equals(name, student.name);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + age;
+        result = 31 * result + (isActiveStudent ? 1 : 0);
+        return result;
     }
 }
