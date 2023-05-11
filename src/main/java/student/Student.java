@@ -49,4 +49,14 @@ public class Student {
     public void setActiveStudent(boolean activeStudent) {
         isActiveStudent = activeStudent;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", isActiveStudent=" + isActiveStudent +
+                '}';
+    }
 }

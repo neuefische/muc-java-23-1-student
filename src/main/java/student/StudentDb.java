@@ -1,5 +1,7 @@
 package student;
 
+import java.util.Arrays;
+
 public class StudentDb {
 
     private Student [] students;
@@ -11,5 +13,12 @@ public class StudentDb {
 
     public Student[] getAllStudents() {
         return students;
+    }
+
+    @Override
+    public String toString() {
+        return "StudentDb{" +
+                "students=" + Arrays.toString(students) +
+                '}';
     }
 }
