@@ -2,6 +2,8 @@ package student;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.NoSuchElementException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class StudentDbTest {
@@ -55,4 +57,47 @@ class StudentDbTest {
         assertEquals(expectedStudentsString, actualStudentDbString);
     }
 
+    @Test
+    void randomStudent_shouldReturnAValidStudentsObject_whenTwoStudentsAreInStudentsArray() {
+        // GIVEN
+        Student jackTorrance = new Student("1", "Jack Torrance", 37, false);
+        Student wendyTorrance = new Student("2", "Wendy Torrance", 35, false);
+        Student [] expectedStudents = {jackTorrance, wendyTorrance};
+
+        StudentDb studentDb = new StudentDb(expectedStudents);
+
+        // WHEN
+        Student randomStudent = studentDb.randomStudent();
+
+        // THEN
+        assertNotNull(randomStudent);
+    }
+
+    @Test
+    void randomStudent_shouldReturnAValidStudentObject_whenOneStudentIsInStudentsArray() {
+        // GIVEN
+        Student jackTorrance = new Student("1", "Jack Torrance", 37, false);
+        Student [] expectedStudents = {jackTorrance};
+
+        StudentDb studentDb = new StudentDb(expectedStudents);
+
+        // WHEN
+        Student randomStudent = studentDb.randomStudent();
+
+        // THEN
+        assertNotNull(randomStudent);
+    }
+
+    @Test
+    void randomStudent_shouldReturnNoStudentObject_whenNoStudentsAreInStudentsArray() {
+        // GIVEN
+        Student [] expectedStudents = {};
+
+        StudentDb studentDb = new StudentDb(expectedStudents);
+
+        // WHEN + THEN
+        assertThrows(NoSuchElementException.class, () -> {
+            studentDb.randomStudent();
+        });
+    }
 }
