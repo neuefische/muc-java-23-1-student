@@ -5,7 +5,7 @@ import java.util.Objects;
 public class BiologyStudent extends Student{
     private String specialization;
     
-    public BiologyStudent() { }
+    public BiologyStudent() {}
     
     public BiologyStudent(String specialization) {
         this.specialization = specialization;
