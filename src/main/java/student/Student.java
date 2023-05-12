@@ -4,7 +4,7 @@ import java.util.Objects;
 
 // Klassennamen = Anfangs GroßGeschrieben
 // UpperCamelCase
-public class Student {
+public abstract class Student implements Citizen {
 
     private String id;
     private String name;
@@ -22,6 +22,14 @@ public class Student {
         this.name = name;
         this.age = age;
         this.isActiveStudent = isActiveStudent;
+    }
+    public void payTaxes(double amount) {
+        // Implementation of the payTaxes method
+        System.out.println("Student is paying taxes: $" + amount);
+    }
+
+    public String getID() {
+        return this.id;
     }
 
     public String printStudentName() {
