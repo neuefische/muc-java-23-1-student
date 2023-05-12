@@ -4,7 +4,7 @@ import java.util.Objects;
 
 // Klassennamen = Anfangs GroßGeschrieben
 // UpperCamelCase
-public class Student {
+public abstract class Student implements Citizen {
 
     private String id;
     private String name;

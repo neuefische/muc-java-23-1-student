@@ -11,7 +11,7 @@ class StudentDbTest {
     @Test
     void getAllStudents_shouldReturnOneStudent_whenOneStudentIsInStudentsArray() {
         // GIVEN
-        Student jackTorrance = new Student("1", "Jack Torrance", 37, false);
+        Student jackTorrance = new ComputerScienceStudent("1", "Jack Torrance", 37, false,"Java");
         Student [] expectedStudents = {jackTorrance};
 
         StudentDb studentDb = new StudentDb(expectedStudents);
@@ -26,8 +26,8 @@ class StudentDbTest {
     @Test
     void getAllStudents_shouldReturnTwoStudents_whenTwoStudentsAreInStudentsArray() {
         // GIVEN
-        Student jackTorrance = new Student("1", "Jack Torrance", 37, false);
-        Student wendyTorrance = new Student("2", "Wendy Torrance", 35, false);
+        Student jackTorrance = new ComputerScienceStudent("1", "Jack Torrance", 37, false,"Java");
+        Student wendyTorrance = new ComputerScienceStudent("2", "Wendy Torrance", 35, false,"JavaFX");
         Student [] expectedStudents = {jackTorrance, wendyTorrance};
 
         StudentDb studentDb = new StudentDb(expectedStudents);
@@ -42,14 +42,14 @@ class StudentDbTest {
     @Test
     void studentDbToString_shouldReturnExpectedString_whenTwoStudentsAreInStudentsArray() {
         // GIVEN
-        Student jackTorrance = new Student("1", "Jack Torrance", 37, false);
-        Student wendyTorrance = new Student("2", "Wendy Torrance", 35, false);
+        Student jackTorrance = new ComputerScienceStudent("1", "Jack Torrance", 37, false,"Java");
+        Student wendyTorrance = new ComputerScienceStudent("2", "Wendy Torrance", 35, false,"Mongo");
         Student [] expectedStudents = {jackTorrance, wendyTorrance};
 
         StudentDb studentDb = new StudentDb(expectedStudents);
 
-        String expectedStudentsString = "StudentDb{students=[Student{id='1', name='Jack Torrance', age=37, isActiveStudent=false}, Student{id='2', name='Wendy Torrance', age=35, isActiveStudent=false}]}";
-
+        String expectedStudentsString = "StudentDb{students=[ComputerScienceStudent{major='Java'}, ComputerScienceStudent{major='Mongo'}]}";
+        System.out.println(jackTorrance);
         // WHEN
         String actualStudentDbString = studentDb.toString();
 
@@ -60,8 +60,8 @@ class StudentDbTest {
     @Test
     void randomStudent_shouldReturnAValidStudentsObject_whenTwoStudentsAreInStudentsArray() {
         // GIVEN
-        Student jackTorrance = new Student("1", "Jack Torrance", 37, false);
-        Student wendyTorrance = new Student("2", "Wendy Torrance", 35, false);
+        Student jackTorrance = new ComputerScienceStudent("1", "Jack Torrance", 37, false,"Java");
+        Student wendyTorrance = new ComputerScienceStudent("2", "Wendy Torrance", 35, false,"Mongo");
 
         Student [] expectedStudents = {jackTorrance, wendyTorrance};
 
@@ -77,7 +77,7 @@ class StudentDbTest {
     @Test
     void randomStudent_shouldReturnAValidStudentObject_whenOneStudentIsInStudentsArray() {
         // GIVEN
-        Student jackTorrance = new Student("1", "Jack Torrance", 37, false);
+        Student jackTorrance = new ComputerScienceStudent("1", "Jack Torrance", 37, false,"Java");
         Student [] expectedStudents = {jackTorrance};
 
         StudentDb studentDb = new StudentDb(expectedStudents);

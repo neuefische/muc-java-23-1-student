@@ -1,3 +1,4 @@
+import student.ComputerScienceStudent;
 import student.Student;
 
 public class Main {
@@ -8,7 +9,7 @@ public class Main {
 
         // Neues Studenten-Objekt erzeugt/ gemacht
         // <Klassentyp> <variablenName> = new <Klassentyp>();
-        Student ramiMalek = new Student();
+        Student ramiMalek = new ComputerScienceStudent();
 
         // Eigenschaften vom Studenten-Objekt "ramiMalek" definiert
         ramiMalek.setActiveStudent(true);
@@ -30,7 +31,7 @@ public class Main {
 
         s1.equals(s2);
 
-        Student student = new Student("Rami");
+        Student student = new ComputerScienceStudent("Rami");
         System.out.println(student.hashCode());
     }
 }
