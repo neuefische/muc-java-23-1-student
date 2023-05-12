@@ -3,41 +3,24 @@ package student;
 import java.util.Objects;
 
 public class ComputerScienceStudent extends Student{
-
-
-
-    String major;
-
+    private String favouriteProgrammingLanguage;
 
     public ComputerScienceStudent(){}
 
     public ComputerScienceStudent(String id, String name, int age, boolean isActiveStudent, String major) {
         super(id, name, age, isActiveStudent);
-        this.major = major;
+        this.favouriteProgrammingLanguage = major;
     }
 
     public ComputerScienceStudent(String name) {
         super.setName(name);
     }
 
-
-    // von Citizen Interface
-    public void payTaxes(double amount) {
-        // Implementation of the payTaxes method
-        System.out.println("Student is paying taxes: $" + amount);
+    public String getFavouriteProgrammingLanguage() {
+        return favouriteProgrammingLanguage;
     }
-
-    public String getID() {
-        return super.getId();
-    }
-
-
-    public String getMajor() {
-        return major;
-    }
-
-    public void setMajor(String major) {
-        this.major = major;
+    public void setFavouriteProgrammingLanguage(String favouriteProgrammingLanguage) {
+        this.favouriteProgrammingLanguage = favouriteProgrammingLanguage;
     }
 
 
@@ -47,21 +30,18 @@ public class ComputerScienceStudent extends Student{
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         ComputerScienceStudent that = (ComputerScienceStudent) o;
-        return Objects.equals(major, that.major);
+        return Objects.equals(favouriteProgrammingLanguage, that.favouriteProgrammingLanguage);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), major);
+        return Objects.hash(super.hashCode(), favouriteProgrammingLanguage);
     }
 
     @Override
     public String toString() {
         return "ComputerScienceStudent{" +
-                "major='" + major + '\'' +
+                "major='" + favouriteProgrammingLanguage + '\'' +
                 '}';
     }
-
-
-
 }

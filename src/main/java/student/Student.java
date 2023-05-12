@@ -23,6 +23,14 @@ public abstract class Student implements Citizen {
         this.age = age;
         this.isActiveStudent = isActiveStudent;
     }
+    public void payTaxes(double amount) {
+        // Implementation of the payTaxes method
+        System.out.println("Student is paying taxes: $" + amount);
+    }
+
+    public String getID() {
+        return this.id;
+    }
 
     public String printStudentName() {
         return "Name: " + name;
