@@ -1,5 +1,6 @@
 import student.ComputerScienceStudent;
 import student.Student;
+import student.StudentDb;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,8 +19,16 @@ public class Main {
 
         System.out.println(ramiMalek.printStudentName());
 
+        Student[] allCurrentlyKnownStudents = new Student[]{ramiMalek};
+
+        StudentDb neuefischeDb = new StudentDb(allCurrentlyKnownStudents);
 
 
+        for (Student student : neuefischeDb.getAllStudents()) {
+            System.out.println("Ein Student bei neuefische: " + student);
+        }
+
+        System.out.println("Ein zufälliger Student: " + neuefischeDb.randomStudent());
 
         int a = 1;
         int b = 1;
