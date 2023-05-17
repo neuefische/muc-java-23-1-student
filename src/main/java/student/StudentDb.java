@@ -1,21 +1,21 @@
 package student;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class StudentDb {
 
-    private List<Student> students;
+    private final Map<String, Student> students = new HashMap<>();
 
     public StudentDb(Student [] students) {
         // Bestehendes Studenten-Array kopieren
-        this.students = Arrays.asList(students);
+        for (Student student : students) {
+            this.students.put(student.getId(), student);
+        }
     }
 
     public Student[] getAllStudents() {
-        return students.toArray(new Student[0]);
+        return students.values().toArray(new Student[0]);
     }
 
     public Student randomStudent(){
@@ -24,7 +24,7 @@ public class StudentDb {
         }
 
         int randomNumberBetween0AndStudentsArrayLength = ThreadLocalRandom.current().nextInt(0, students.size());
-        return students.get(randomNumberBetween0AndStudentsArrayLength);
+        return new ArrayList<>(students.values()).get(randomNumberBetween0AndStudentsArrayLength);
     }
 
     @Override
