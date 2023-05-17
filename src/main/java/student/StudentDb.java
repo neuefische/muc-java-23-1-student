@@ -1,35 +1,36 @@
 package student;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class StudentDb {
 
-    private Student [] students;
+    private List<Student> students;
 
     public StudentDb(Student [] students) {
         // Bestehendes Studenten-Array kopieren
-        this.students = students.clone();
+        this.students = Arrays.asList(students);
     }
 
     public Student[] getAllStudents() {
-        return students;
+        return students.toArray(new Student[0]);
     }
 
     public Student randomStudent(){
-        if(students.length == 0) {
+        if(students.isEmpty()) {
             throw new NoSuchElementException("Die StudentenDb ist leer!");
         }
 
-        int randomNumberBetween0AndStudentsArrayLength = ThreadLocalRandom.current().nextInt(0, students.length);
-        return students[randomNumberBetween0AndStudentsArrayLength];
+        int randomNumberBetween0AndStudentsArrayLength = ThreadLocalRandom.current().nextInt(0, students.size());
+        return students.get(randomNumberBetween0AndStudentsArrayLength);
     }
 
     @Override
     public String toString() {
         return "StudentDb{" +
-                "students=" + Arrays.toString(students) +
+                "students=" + students +
                 '}';
     }
 }
