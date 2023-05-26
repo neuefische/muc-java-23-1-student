@@ -1,4 +1,4 @@
-package student;
+package de.neuefische.mucjava231student.model;
 
 import java.util.Objects;
 
