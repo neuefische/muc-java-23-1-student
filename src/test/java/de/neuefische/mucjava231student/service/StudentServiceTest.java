@@ -1,61 +1,117 @@
 package de.neuefische.mucjava231student.service;
 
-import de.neuefische.mucjava231student.model.ComputerScienceStudent;
+import de.neuefische.mucjava231student.exception.StudentNotFoundException;
 import de.neuefische.mucjava231student.model.Student;
 import de.neuefische.mucjava231student.repository.StudentRepository;
 import org.junit.jupiter.api.Test;
 
-import java.util.NoSuchElementException;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class StudentServiceTest {
 
+    private final StudentRepository studentRepository = mock(StudentRepository.class);
+    private final StudentService studentService = new StudentService(studentRepository);
+
     @Test
-    void randomStudent_shouldReturnAValidStudentsObject_whenTwoStudentsAreInStudentsArray() {
+    void getAllStudents_whenNoStudentsAvailable_thenReturnEmptyList() {
         // GIVEN
-        Student jackTorrance = new ComputerScienceStudent("1", "Jack Torrance", 37, false,"Java");
-        Student wendyTorrance = new ComputerScienceStudent("2", "Wendy Torrance", 35, false,"Mongo");
-
-        Student [] expectedStudents = {jackTorrance, wendyTorrance};
-
-        StudentRepository studentRepository = new StudentRepository(expectedStudents);
-        StudentService studentService = new StudentService(studentRepository);
-
+        List<Student> expected = List.of();
         // WHEN
-        Student randomStudent = studentService.randomStudent();
-
+        when(studentRepository.getAllStudents()).thenReturn(expected);
+        List<Student> actual = studentService.getAllStudents();
         // THEN
-        assertNotNull(randomStudent);
+        assertEquals(expected, actual);
+        verify(studentRepository).getAllStudents();
     }
 
     @Test
-    void randomStudent_shouldReturnAValidStudentObject_whenOneStudentIsInStudentsArray() {
+    void getAllStudents_whenStudentsAvailable_thenReturnListOfStudents() {
         // GIVEN
-        Student jackTorrance = new ComputerScienceStudent("1", "Jack Torrance", 37, false,"Java");
-        Student [] expectedStudents = {jackTorrance};
-
-        StudentRepository studentRepository = new StudentRepository(expectedStudents);
-        StudentService studentService = new StudentService(studentRepository);
-
+        List<Student> expected = List.of(
+                new Student("1", "Hans", 28, true),
+                new Student("2", "Peter", 30, true),
+                new Student("3", "Klaus", 25, true)
+        );
         // WHEN
-        Student randomStudent = studentService.randomStudent();
-
+        when(studentRepository.getAllStudents()).thenReturn(expected);
+        List<Student> actual = studentService.getAllStudents();
         // THEN
-        assertNotNull(randomStudent);
+        assertEquals(expected, actual);
+        verify(studentRepository).getAllStudents();
     }
 
     @Test
-    void randomStudent_shouldReturnNoStudentObject_whenNoStudentsAreInStudentsArray() {
+    void getStudentById_whenStudentWithGivenIdExist_thenReturnStudentById() {
         // GIVEN
-        Student [] expectedStudents = {};
+        Student expected = new Student("1", "Hans", 28, true);
+        // WHEN
+        when(studentRepository.getStudentById("1")).thenReturn(expected);
+        Student actual = studentService.getStudentById("1");
+        // THEN
+        assertEquals(expected, actual);
+        verify(studentRepository).getStudentById("1");
+    }
 
-        StudentRepository studentRepository = new StudentRepository(expectedStudents);
-        StudentService studentService = new StudentService(studentRepository);
+    @Test
+    void getStudentById_whenStudentWithGivenIdNotExist_thenThrowStudentNotFoundException() {
+        // GIVEN
+        String id = "1";
+        // WHEN
+        when(studentRepository.getStudentById(id)).thenThrow(new StudentNotFoundException(id));
+        // THEN
+        assertThrows(StudentNotFoundException.class, () -> studentService.getStudentById(id));
+        verify(studentRepository).getStudentById(id);
+    }
 
-        // WHEN + THEN
-        assertThrows(NoSuchElementException.class, () -> {
-            studentService.randomStudent();
-        });
+    @Test
+    void addStudent_whenCalled_thenSaveAndReturnStudent() {
+        // GIVEN
+        Student expected = new Student("1", "Hans", 28, true);
+        // WHEN
+        when(studentRepository.addStudent(expected)).thenReturn(expected);
+        Student actual = studentService.addStudent(expected);
+        // THEN
+        assertEquals(expected, actual);
+        verify(studentRepository).addStudent(expected);
+    }
+
+    @Test
+    void deleteStudent_whenStudentWithGivenIdExist_thenDeleteStudentAndNoReturn() {
+        // GIVEN
+        String id = "1";
+        Student studentToDelete = new Student(id, "Hans", 28, true);
+        studentRepository.addStudent(studentToDelete);
+        // WHEN
+        when(studentRepository.getStudentById(id)).thenReturn(studentToDelete);
+        doNothing().when(studentRepository).deleteStudent(id);
+        studentService.deleteStudent(id);
+        // THEN
+        verify(studentRepository).deleteStudent(id);
+    }
+
+    @Test
+    void deleteStudent_whenStudentWithGivenIdNotExist_thenThrowStudentNotFoundException() {
+        // GIVEN
+        String id = "1";
+        // WHEN
+        when(studentRepository.getStudentById(id)).thenThrow(new StudentNotFoundException(id));
+        // THEN
+        assertThrows(StudentNotFoundException.class, () -> studentService.deleteStudent(id));
+        verify(studentRepository).getStudentById(id);
+    }
+
+    @Test
+    void updateStudent_whenStudentExist_thenUpdateAndReturnStudent() {
+        // GIVEN
+        Student expected = new Student("1", "Hans", 28, false);
+        // WHEN
+        when(studentRepository.updateStudent(expected)).thenReturn(expected);
+        Student actual = studentService.updateStudent(expected);
+        // THEN
+        assertEquals(expected, actual);
+        verify(studentRepository).updateStudent(expected);
     }
 }
