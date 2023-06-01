@@ -36,7 +36,17 @@ class StudentControllerTest {
                                         }
                                         """
                         ))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                        .andExpect(MockMvcResultMatchers.content().json(
+                                """
+                                        {
+                                            "id": "1",
+                                            "name": "Mathias",
+                                            "age": 32,
+                                            "isActiveStudent": true
+                                        }
+                                        """
+                        ));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/students"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -68,7 +78,17 @@ class StudentControllerTest {
                                         }
                                         """
                         ))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                        .andExpect(MockMvcResultMatchers.content().json(
+                                """
+                                        {
+                                            "id": "1",
+                                            "name": "Mathias",
+                                            "age": 32,
+                                            "isActiveStudent": true
+                                        }
+                                        """
+                        ));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/students/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -125,7 +145,17 @@ class StudentControllerTest {
                                         }
                                         """
                         ))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                        .andExpect(MockMvcResultMatchers.content().json(
+                                """
+                                    {
+                                            "id": "1",
+                                            "name": "Mathias",
+                                            "age": 32,
+                                            "isActiveStudent": true
+                                        }
+                                """
+                        ));
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/students/1")
                         .contentType("application/json")
@@ -166,7 +196,17 @@ class StudentControllerTest {
                                         }
                                         """
                         ))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                        .andExpect(MockMvcResultMatchers.content().json(
+                                """
+                                    {
+                                            "id": "1",
+                                            "name": "Mathias",
+                                            "age": 32,
+                                            "isActiveStudent": true
+                                        }
+                                """
+                        ));
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/students/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
