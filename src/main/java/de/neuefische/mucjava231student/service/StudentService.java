@@ -5,8 +5,6 @@ import de.neuefische.mucjava231student.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class StudentService {
@@ -33,7 +31,7 @@ public class StudentService {
         studentRepository.deleteStudent(id);
     }
 
-    public Student updateStudent(Student student){
-        return studentRepository.updateStudent(student);
+    public Student updateStudent(String id, Student student){
+        return studentRepository.updateStudent(id, student);
     }
 }

@@ -18,24 +18,31 @@ public class StudentRepository {
     }
 
     public Student getStudentById(String id) throws StudentNotFoundException {
-        Student studentToFind =  students.get(id);
-        if(studentToFind == null){
+        if(!students.containsKey(id)){
             throw new StudentNotFoundException(id);
         }
-        return studentToFind;
+        return students.get(id);
     }
 
     public Student addStudent(Student student){
-        return students.put(student.id(), student);
+        students.put(student.id(), student);
+        return getStudentById(student.id());
     }
 
     public void deleteStudent(String id){
-        Student studentToDelete = getStudentById(id);
-        students.remove(studentToDelete.id());
+        if (!students.containsKey(id)) {
+            throw new StudentNotFoundException(id);
+        }
+        students.remove(id);
     }
 
-    public Student updateStudent(Student student){
-        return students.replace(student.id(), student);
+    public Student updateStudent(String id, Student student){
+        if(!students.containsKey(id)){
+            throw new StudentNotFoundException(id);
+        }
+        students.remove(id);
+        students.put(id, student);
+        return getStudentById(id);
     }
 
 }

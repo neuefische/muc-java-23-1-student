@@ -97,21 +97,23 @@ class StudentServiceTest {
         // GIVEN
         String id = "1";
         // WHEN
-        when(studentRepository.getStudentById(id)).thenThrow(new StudentNotFoundException(id));
+        doThrow(StudentNotFoundException.class).when(studentRepository).deleteStudent(id);
         // THEN
         assertThrows(StudentNotFoundException.class, () -> studentService.deleteStudent(id));
-        verify(studentRepository).getStudentById(id);
+        verify(studentRepository).deleteStudent(id);
     }
+
 
     @Test
     void updateStudent_whenStudentExist_thenUpdateAndReturnStudent() {
         // GIVEN
+        String id = "1";
         Student expected = new Student("1", "Hans", 28, false);
         // WHEN
-        when(studentRepository.updateStudent(expected)).thenReturn(expected);
-        Student actual = studentService.updateStudent(expected);
+        when(studentRepository.updateStudent(id, expected)).thenReturn(expected);
+        Student actual = studentService.updateStudent(id, expected);
         // THEN
         assertEquals(expected, actual);
-        verify(studentRepository).updateStudent(expected);
+        verify(studentRepository).updateStudent(id, expected);
     }
 }
