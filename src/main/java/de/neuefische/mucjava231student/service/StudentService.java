@@ -2,26 +2,36 @@ package de.neuefische.mucjava231student.service;
 
 import de.neuefische.mucjava231student.model.Student;
 import de.neuefische.mucjava231student.repository.StudentRepository;
+import org.springframework.stereotype.Service;
 
-import java.util.NoSuchElementException;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.List;
 
+@Service
 public class StudentService {
 
-    private StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
 
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
-    public Student randomStudent(){
-        Student[] students = studentRepository.getAllStudents();
+    public List<Student> getAllStudents(){
+        return studentRepository.getAllStudents();
+    }
 
-        if(students.length == 0) {
-            throw new NoSuchElementException("Die StudentenDb ist leer!");
-        }
+    public Student getStudentById(String id){
+        return studentRepository.getStudentById(id);
+    }
 
-        int randomNumberBetween0AndStudentsArrayLength = ThreadLocalRandom.current().nextInt(0, students.length);
-        return students[randomNumberBetween0AndStudentsArrayLength];
+    public Student addStudent(Student student){
+        return studentRepository.addStudent(student);
+    }
+
+    public void deleteStudent(String id){
+        studentRepository.deleteStudent(id);
+    }
+
+    public Student updateStudent(String id, Student student){
+        return studentRepository.updateStudent(id, student);
     }
 }
