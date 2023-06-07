@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class StudentService {
+public class StudentService implements NewsSubscriber {
 
     private final StudentRepository studentRepository;
 
@@ -15,23 +15,29 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    public List<Student> getAllStudents(){
+    public List<Student> getAllStudents() {
         return studentRepository.getAllStudents();
     }
 
-    public Student getStudentById(String id){
+    public Student getStudentById(String id) {
         return studentRepository.getStudentById(id);
     }
 
-    public Student addStudent(Student student){
+    public Student addStudent(Student student) {
         return studentRepository.addStudent(student);
     }
 
-    public void deleteStudent(String id){
+    public void deleteStudent(String id) {
         studentRepository.deleteStudent(id);
     }
 
-    public Student updateStudent(String id, Student student){
+    public Student updateStudent(String id, Student student) {
         return studentRepository.updateStudent(id, student);
     }
+
+    @Override
+    public void handleNews(String news) {
+        System.out.println("News: " + news);
+    }
+
 }
