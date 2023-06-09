@@ -35,9 +35,9 @@ public class StudentService implements NewsSubscriber {
         return studentRepository.updateStudent(id, student);
     }
 
+
     @Override
     public void handleNews(String news) {
-        System.out.println("News: " + news);
+        System.out.println("I bims der + " + this.getClass() + " und hier sind die News: " + news);
     }
-
 }

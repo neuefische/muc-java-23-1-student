@@ -25,6 +25,7 @@ public class NewsProductionService implements NewsPublisher {
 
     @Override
     public void notifySubscribers(String news) {
+        // Allen Abonnenten die Nachricht schicken
         for (NewsSubscriber subscriber : subscribers) {
             subscriber.handleNews(news);
         }
