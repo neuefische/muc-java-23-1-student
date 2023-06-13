@@ -21,8 +21,8 @@ public class NewsController {
     // the news should be sent as a request body
     // the news should be sent as a POST request
     @PostMapping
-    public void sendNews(@RequestBody String news) {
-        newsService.notifySubscribers(news);
+    public void sendNews(@RequestBody String nachrichtenDiePerPostmanReinkommen) {
+        newsService.notifySubscribers(nachrichtenDiePerPostmanReinkommen);
     }
 
 }
