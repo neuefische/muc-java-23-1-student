@@ -6,6 +6,7 @@ import de.neuefische.mucjava231student.repository.StudentRepository;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -20,11 +21,11 @@ class StudentServiceTest {
         // GIVEN
         List<Student> expected = List.of();
         // WHEN
-        when(studentRepository.getAllStudents()).thenReturn(expected);
+        when(studentRepository.findAll()).thenReturn(expected);
         List<Student> actual = studentService.getAllStudents();
         // THEN
         assertEquals(expected, actual);
-        verify(studentRepository).getAllStudents();
+        verify(studentRepository).findAll();
     }
 
     @Test
@@ -36,23 +37,23 @@ class StudentServiceTest {
                 new Student("3", "Klaus", 25, true)
         );
         // WHEN
-        when(studentRepository.getAllStudents()).thenReturn(expected);
+        when(studentRepository.findAll()).thenReturn(expected);
         List<Student> actual = studentService.getAllStudents();
         // THEN
         assertEquals(expected, actual);
-        verify(studentRepository).getAllStudents();
+        verify(studentRepository).findAll();
     }
 
     @Test
     void getStudentById_whenStudentWithGivenIdExist_thenReturnStudentById() {
         // GIVEN
-        Student expected = new Student("1", "Hans", 28, true);
+        Optional<Student> expected = Optional.of(new Student("1", "Hans", 28, true));
         // WHEN
-        when(studentRepository.getStudentById("1")).thenReturn(expected);
-        Student actual = studentService.getStudentById("1");
+        when(studentRepository.findById("1")).thenReturn(expected);
+        Optional<Student> actual = studentService.getStudentById("1");
         // THEN
         assertEquals(expected, actual);
-        verify(studentRepository).getStudentById("1");
+        verify(studentRepository).findById("1");
     }
 
     @Test
@@ -60,10 +61,10 @@ class StudentServiceTest {
         // GIVEN
         String id = "1";
         // WHEN
-        when(studentRepository.getStudentById(id)).thenThrow(new StudentNotFoundException(id));
+        when(studentRepository.findById(id)).thenThrow(new StudentNotFoundException(id));
         // THEN
         assertThrows(StudentNotFoundException.class, () -> studentService.getStudentById(id));
-        verify(studentRepository).getStudentById(id);
+        verify(studentRepository).findById(id);
     }
 
     @Test
@@ -71,11 +72,11 @@ class StudentServiceTest {
         // GIVEN
         Student expected = new Student("1", "Hans", 28, true);
         // WHEN
-        when(studentRepository.addStudent(expected)).thenReturn(expected);
+        when(studentRepository.save(expected)).thenReturn(expected);
         Student actual = studentService.addStudent(expected);
         // THEN
         assertEquals(expected, actual);
-        verify(studentRepository).addStudent(expected);
+        verify(studentRepository).save(expected);
     }
 
     @Test
@@ -83,13 +84,13 @@ class StudentServiceTest {
         // GIVEN
         String id = "1";
         Student studentToDelete = new Student(id, "Hans", 28, true);
-        studentRepository.addStudent(studentToDelete);
+        studentRepository.save(studentToDelete);
         // WHEN
-        when(studentRepository.getStudentById(id)).thenReturn(studentToDelete);
-        doNothing().when(studentRepository).deleteStudent(id);
+        when(studentRepository.findById(id)).thenReturn(Optional.of(studentToDelete));
+        doNothing().when(studentRepository).deleteById(id);
         studentService.deleteStudent(id);
         // THEN
-        verify(studentRepository).deleteStudent(id);
+        verify(studentRepository).deleteById(id);
     }
 
     @Test
@@ -97,10 +98,10 @@ class StudentServiceTest {
         // GIVEN
         String id = "1";
         // WHEN
-        doThrow(StudentNotFoundException.class).when(studentRepository).deleteStudent(id);
+        doThrow(StudentNotFoundException.class).when(studentRepository).deleteById(id);
         // THEN
         assertThrows(StudentNotFoundException.class, () -> studentService.deleteStudent(id));
-        verify(studentRepository).deleteStudent(id);
+        verify(studentRepository).deleteById(id);
     }
 
 
@@ -110,10 +111,11 @@ class StudentServiceTest {
         String id = "1";
         Student expected = new Student("1", "Hans", 28, false);
         // WHEN
-        when(studentRepository.updateStudent(id, expected)).thenReturn(expected);
+        when(studentRepository.findById(id)).thenReturn(Optional.of(expected));
+        when(studentRepository.save(expected)).thenReturn(expected);
         Student actual = studentService.updateStudent(id, expected);
         // THEN
         assertEquals(expected, actual);
-        verify(studentRepository).updateStudent(id, expected);
+        verify(studentRepository).save(expected);
     }
 }

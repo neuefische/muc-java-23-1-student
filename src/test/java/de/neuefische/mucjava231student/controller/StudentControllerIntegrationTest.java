@@ -1,5 +1,7 @@
 package de.neuefische.mucjava231student.controller;
 
+import de.neuefische.mucjava231student.model.Student;
+import de.neuefische.mucjava231student.repository.StudentRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -15,6 +17,9 @@ class StudentControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private StudentRepository studentRepository;
 
     @Test
     @DirtiesContext
@@ -139,29 +144,8 @@ class StudentControllerIntegrationTest {
     @Test
     @DirtiesContext
     void updateStudent_whenStudentExist_thenExpectStatusOkAndReturnUpdatedStudent() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/students")
-                        .contentType("application/json")
-                        .content(
-                                """
-                                        {
-                                            "id": "1",
-                                            "name": "Mathias",
-                                            "age": 32,
-                                            "isActiveStudent": true
-                                        }
-                                        """
-                        ))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                        .andExpect(MockMvcResultMatchers.content().json(
-                                """
-                                    {
-                                            "id": "1",
-                                            "name": "Mathias",
-                                            "age": 32,
-                                            "isActiveStudent": true
-                                        }
-                                """
-                        ));
+        Student student = new Student("1", "Mathias", 32, true);
+        studentRepository.save(student);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/students/1")
                         .contentType("application/json")

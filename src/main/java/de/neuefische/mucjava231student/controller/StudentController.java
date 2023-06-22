@@ -5,6 +5,7 @@ import de.neuefische.mucjava231student.service.StudentService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/students")
@@ -22,7 +23,7 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public Student getStudentById(@PathVariable String id){
+    public Optional<Student> getStudentById(@PathVariable String id){
         return studentService.getStudentById(id);
     }
 
