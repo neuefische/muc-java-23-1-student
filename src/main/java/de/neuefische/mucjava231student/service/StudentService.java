@@ -25,6 +25,10 @@ public class StudentService {
         return studentRepository.findById(id);
     }
 
+    public Optional<Student> getStudentByTeacherId(String id){
+        return studentRepository.findByTeacherId(id);
+    }
+
     public Student addStudent(Student student){
         return studentRepository.save(student);
     }
